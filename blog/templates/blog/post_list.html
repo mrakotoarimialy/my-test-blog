@@ -5,7 +5,26 @@
     <div class="date">
         {{ post.published_date }}
     </div>
-    <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+    <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
+        {% if user.is_authenticated %}
+        <!-- 
+        <a class="btn btn-default" href="{% url 'post_delete' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></sp an>
+            </a>
+    -->
+        <button class="btn btn-default" onclick="functionConfirmDelete('{{ post.pk }}')"><span class="glyphicon glyphicon-remove"></sp an>
+                </button>
+        {% endif %}</h2>
     <p>{{ post.text|linebreaksbr }}</p>
 </div>
+<script>
+    function functionConfirmDelete(post_pk) {
+     
+      var r = confirm("êtes-vous sûr de vouloir supprimer?");
+      if (r == true) {
+        var url = "{% url 'post_delete' pk=999 %}";
+        document.location.href = url.replace('999', post_pk);
+      }  
+    }
+    </script>
+    
 {% endfor %} {% endblock %}
